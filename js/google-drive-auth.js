@@ -7,6 +7,9 @@ const GOOGLE_SCOPES =
 let googleAccessToken =
 null;
 
+let tokenClient =
+null;
+
 function saveDriveToken(
 token
 ) {
@@ -67,6 +70,113 @@ function disconnectDrive() {
 googleAccessToken =
 null;
 
+tokenClient =
+null;
+
 clearDriveToken();
+
+}
+
+function loadGoogleIdentity() {
+
+return new Promise(
+    (resolve, reject) => {
+
+        if (
+            window.google &&
+            google.accounts
+        ) {
+
+            resolve();
+            return;
+        }
+
+        const script =
+        document.createElement(
+            "script"
+        );
+
+        script.src =
+        "https://accounts.google.com/gsi/client";
+
+        script.onload =
+        () => resolve();
+
+        script.onerror =
+        () => reject(
+            new Error(
+                "Google Identity Load Failed"
+            )
+        );
+
+        document.head.appendChild(
+            script
+        );
+
+    }
+);
+
+}
+
+async function connectGoogleDrive() {
+
+await loadGoogleIdentity();
+
+return new Promise(
+(resolve, reject) => {
+
+tokenClient =
+
+google.accounts.oauth2
+.initTokenClient({
+
+client_id:
+GOOGLE_CLIENT_ID,
+
+scope:
+GOOGLE_SCOPES,
+
+callback:
+(response) => {
+
+if (
+response.error
+) {
+
+reject(
+response
+);
+
+return;
+}
+
+setDriveToken(
+response.access_token
+);
+
+resolve(
+response.access_token
+);
+
+}
+
+});
+
+tokenClient.requestAccessToken();
+
+});
+}
+
+async function ensureDriveConnection() {
+
+if (
+isDriveConnected()
+) {
+
+return getCurrentDriveToken();
+
+}
+
+return await connectGoogleDrive();
 
 }
