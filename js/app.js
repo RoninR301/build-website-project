@@ -79,8 +79,8 @@ Project Loaded
 Name:
 ${project.name}
 
-Folder:
-${getFolderPath(project.id) || "Not Connected"}
+Google Drive:
+Connected
 
 Status:
 Ready
@@ -101,8 +101,7 @@ workspaceProjectName.textContent =
 project.name;
 
 workspaceFolderPath.textContent =
-getFolderPath(project.id) ||
-"No Folder Connected";
+"Google Drive Connected";
 
 updateProjectSummary(
     project
@@ -324,28 +323,6 @@ projects.forEach(project => {
         "click",
         () => {
 
-            if (
-                !isFolderConnected(
-                    project.id
-                )
-            ) {
-
-                const folderHandle =
-                selectProjectFolder(
-                    project.id
-                );
-
-                if (!folderHandle) {
-                    return;
-                }
-
-                saveFolderReference(
-                    project.id
-                );
-
-                return;
-            }
-
             openProject(
                 project
             );
@@ -375,6 +352,10 @@ if (!name) {
 
 createProject(
     name
+);
+
+openProject(
+    getProjects().slice(-1)[0]
 );
 
 renderProjects();
