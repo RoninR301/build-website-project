@@ -156,3 +156,23 @@ await fetch(
 return await response.json();
 
 }
+
+async function uploadGeneratedFiles() {
+
+const files =
+getGeneratedFiles();
+
+for (
+    const file of files
+) {
+
+    await createDriveFile(
+        file.fileName,
+        file.content
+    );
+
+}
+
+return true;
+
+}
