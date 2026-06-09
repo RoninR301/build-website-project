@@ -1,268 +1,105 @@
-FOLDER AGENT V1 ROADMAP
+GOOGLE DRIVE INTEGRATION UPDATE
 
-PROJECT GOAL
+STATUS
 
-Build a simple AI-powered workspace where:
+Completed
 
-- User creates a project
-- User selects a folder
-- Gemini API receives prompts
-- AI scans the selected folder
-- AI creates or updates files directly in that folder
-- Project can be reopened later
-- Folder acts as project memory
-- Chat shows only activity logs
-- Code is written directly to files
-- No code viewer required
+FILES UPDATED
 
----
+1. index.html
 
-PHASE 1
+Added:
 
-FOUNDATION
+- Connect Google Drive Button
 
-Create Project System
+2. app.js
 
-Features:
+Added:
 
-- Create Project Button
-- Project Name Input
-- Save Project
-- Recent Projects List
+- Drive Connect Event
+- Google Drive Authentication Check
+- Create Drive Folder
+- Upload Generated Files
 
-Files:
+Removed Flow:
 
-- index.html
-- app.js
-- storage.js
+- selectRealFolder()
+- createRealProjectFiles()
 
-Success Criteria:
+New Flow:
 
-- User can create project
-- Project appears in recent projects
-- Project persists after refresh
+Connect Google Drive
+↓
+Create Drive Folder
+↓
+Generate Files
+↓
+Upload Files To Drive
 
----
+3. google-drive-auth.js
 
-PHASE 2
+Added:
 
-FOLDER ACCESS
+- Google OAuth Login
+- Access Token Storage
+- Token Restore
+- ensureDriveConnection()
 
-Features:
+4. google-drive-api.js
 
-- Select Folder
-- Store Folder Handle
-- Restore Folder Access
-- Verify Permission
+Added:
 
-Files:
+- createDriveFolder()
+- createProjectDriveFolder()
+- getDriveFolder()
+- listDriveFiles()
 
-- folder-access.js
+5. google-drive-writer.js
 
-Success Criteria:
+Added:
 
-- User selects folder
-- Folder remains linked to project
-- Reopen project restores folder access
+- setDriveFolderId()
+- getDriveFolderId()
+- createDriveFile()
+- updateDriveFile()
+- uploadGeneratedFiles()
 
----
+CURRENT WORKFLOW
 
-PHASE 3
+User Clicks Connect Google Drive
+↓
+Google Login
+↓
+Access Token Saved
+↓
+User Creates Project
+↓
+Drive Folder Created
+↓
+Gemini Generates Files
+↓
+Files Uploaded To Google Drive
 
-PROJECT SCANNER
+PENDING
 
-Features:
+- Remove old local folder workflow
+- Replace selectProjectFolder()
+- Replace saveFolderReference()
+- Replace isFolderConnected()
+- Drive based project reopen
+- Drive based project scanner
+- Drive file update system
 
-- Read Folder
-- Scan Files
-- Generate Project Summary
-- Count Files
+NEXT TARGET
 
-Files:
-
-- folder-scanner.js
-
-Success Criteria:
-
-- Folder contents detected
-- Summary generated
-- Agent knows current project structure
-
----
-
-PHASE 4
-
-GEMINI CONNECTION
-
-Features:
-
-- Gemini API Key Input
-- Save API Key
-- Test Connection
-- Send Prompt
-
-Files:
-
-- gemini-client.js
-
-Success Criteria:
-
-- Gemini responds successfully
-- API key saved locally
-
----
-
-PHASE 5
-
-AI AGENT
-
-Features:
-
-- Chat Input
-- Send Prompt
-- Build Context
-- Receive Actions
-
-Files:
-
-- ai-agent.js
-
-Success Criteria:
-
-- Prompt reaches Gemini
-- Agent understands project context
-
----
-
-PHASE 6
-
-FILE WRITER
-
-Features:
-
-- Create File
-- Update File
-- Delete File
-- Write To Selected Folder
-
-Files:
-
-- file-writer.js
-
-Success Criteria:
-
-- AI creates files
-- AI updates files
-- Changes appear in selected folder
-
----
-
-PHASE 7
-
-CHAT ACTIVITY LOG
-
-Features:
-
-- Activity Messages
-- Build Status
-- Success Messages
-
-Files:
-
-- ui.js
-
-Success Criteria:
-
-Display:
-
-- Scanning Folder...
-- Building Files...
-- Updating Project...
-- Completed
-
-No code displayed.
-
----
-
-PHASE 8
-
-PROJECT REOPEN
-
-Features:
-
-- Open Existing Project
-- Scan Folder Again
-- Rebuild Context
-
-Files:
-
-- app.js
-- folder-scanner.js
-
-Success Criteria:
-
-User can:
-
-- Close app
-- Reopen project
-- Continue building
-
----
-
-UI RULES
-
-Dark Theme Only
-
-Required:
-
-- Modern cards
-- Rounded corners
-- Premium look
-- Mobile first
-- Fast animations
-
-Not Required:
-
-- Dashboard
-- Analytics
-- Charts
-- Complex menus
-
----
-
-STRICTLY NOT INCLUDED IN V1
-
-- ZIP Import
-- ZIP Export
-- Preview Window
-- Code Editor
-- Terminal
-- Git Integration
-- Multi Agent
-- Dependency Scanner
-- Templates Marketplace
-- Plugin System
-- Team Collaboration
-- Cloud Sync
-
----
-
-FINAL V1 GOAL
-
-User selects a folder.
-
-User writes:
-
-"Create ecommerce website"
-
-AI scans folder.
-
-AI creates files.
-
-AI updates files.
-
-Everything is saved.
-
-User returns later.
-
-Project continues from the same folder.
+Create Project
+↓
+Auto Create Drive Folder
+↓
+Save Folder ID
+↓
+Generate Files
+↓
+Upload Files
+↓
+Reopen Project From Drive
