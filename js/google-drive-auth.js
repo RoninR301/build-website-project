@@ -1,5 +1,5 @@
 const GOOGLE_CLIENT_ID =
-"YOUR_GOOGLE_CLIENT_ID";
+"537971961349-727bf6k3uq38pnd113mr9ch0a8kc9rcl.apps.googleusercontent.com";
 
 const GOOGLE_SCOPES =
 "https://www.googleapis.com/auth/drive.file";
