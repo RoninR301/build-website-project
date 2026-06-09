@@ -37,6 +37,11 @@ document.getElementById("promptInput");
 const sendPromptBtn =
 document.getElementById("sendPromptBtn");
 
+const connectDriveBtn =
+document.getElementById(
+    "connectDriveBtn"
+);
+
 const geminiResponse =
 document.getElementById("geminiResponse");
 
@@ -136,35 +141,29 @@ logProjectScanned();
 
 }
 
-async function createRealProjectFiles() {
 
-try {
 
-    await createFileInFolder(
-        "index.html",
-        "<h1>Hello World</h1>"
-    );
+async function handleDriveConnect() {
 
-    await createFileInFolder(
-        "style.css",
-        "body{}"
-    );
+    try {
 
-    await createFileInFolder(
-        "app.js",
-        "console.log('ready');"
-    );
+        await ensureDriveConnection();
 
-    return true;
+        alert(
+            "Google Drive Connected"
+        );
 
-} catch (error) {
+    } catch (error) {
 
-    console.error(
-        error
-    );
+        console.error(
+            error
+        );
 
-    return false;
-}
+        alert(
+            "Drive Connection Failed"
+        );
+
+    }
 
 }
 
@@ -211,30 +210,17 @@ saveGeminiKey(
     apiKey
 );
 
-const folderHandle =
-await selectRealFolder();
-
-if (!folderHandle) {
-
-    geminiResponse.textContent =
-    "Folder Not Selected";
-
-    return;
-}
+await ensureDriveConnection();
 
 geminiResponse.textContent =
-"Creating Files...";
+"Google Drive Connected";
 
-const created =
-await createRealProjectFiles();
+geminiResponse.textContent =
+"Creating Drive Folder...";
 
-if (!created) {
-
-    geminiResponse.textContent =
-    "File Creation Failed";
-
-    return;
-}
+await createProjectDriveFolder(
+    currentProject.name
+);
 
 const agentPrompt =
 buildAgentPrompt(
@@ -267,6 +253,8 @@ buildWriteSummary();
 generateProjectFiles(
     userPrompt
 );
+
+await uploadGeneratedFiles();
 
 const generatedFiles =
 buildGeneratedFilesSummary();
@@ -404,6 +392,11 @@ reopenLastProject();
 createProjectBtn.addEventListener(
     "click",
     openModal
+);
+
+connectDriveBtn.addEventListener(
+    "click",
+    handleDriveConnect
 );
 
 saveProjectBtn.addEventListener(
