@@ -115,4 +115,24 @@ function logAIResponse(summary) {
     addActivityLog(`AI response: ${summary}...`);
 }
 
+function logGeminiPipelineStep(step, details) {
+    addActivityLog(`Gemini ${step}: ${String(details).substring(0, 120)}`);
+}
+
+function logAIError(message) {
+    addActivityLog(`AI error: ${String(message).substring(0, 150)}`);
+}
+
+function logAIFileUpdate(fileName, action, success, detail) {
+    const status = success ? "OK" : "FAILED";
+    const msg = detail
+        ? `File ${status}: ${action} ${fileName} — ${detail}`
+        : `File ${status}: ${action} ${fileName}`;
+    addActivityLog(msg);
+}
+
+function logAIParseResult(success, summary) {
+    addActivityLog(`AI parse ${success ? "OK" : "FAILED"}: ${String(summary).substring(0, 100)}`);
+}
+
 loadActivityLogs();
