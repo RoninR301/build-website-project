@@ -313,6 +313,7 @@ async function handleGeminiPrompt() {
     saveProjectSettings();
     saveGeminiKey(apiKey);
 
+    logPromptSent(userPrompt);
     addChatMessage("user", userPrompt);
     $("promptInput").value = "";
     $("sendPromptBtn").disabled = true;
@@ -322,7 +323,14 @@ async function handleGeminiPrompt() {
         const result = await processNaturalLanguageRequest(userPrompt, project);
 
         if (!result.success) {
-            addChatMessage("assistant", result.message || "Request failed");
+            const errorDetail = [
+                result.message || "Request failed",
+                result.httpStatus ? `(HTTP ${result.httpStatus})` : "",
+                result.step ? `[${result.step}]` : ""
+            ].filter(Boolean).join(" ");
+
+            addChatMessage("assistant", errorDetail);
+            logAIError(errorDetail);
             return;
         }
 
