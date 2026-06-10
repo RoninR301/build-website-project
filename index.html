@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folder Agent — AI Development Workspace</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-left">
+            <h1>Folder Agent</h1>
+            <span class="header-tag">AI Workspace</span>
+        </div>
+        <div class="header-actions">
+            <button id="createProjectBtn" class="btn btn-primary">+ Create Project</button>
+            <button id="connectDriveBtn" class="btn btn-success">Connect Google Drive</button>
+        </div>
+    </header>
+
+    <section id="homeScreen" class="home-screen">
+        <h2>Recent Projects</h2>
+        <div id="projectsList" class="projects-grid"></div>
+    </section>
+
+    <section id="workspaceScreen" class="workspace hidden">
+        <div class="workspace-toolbar">
+            <div class="toolbar-left">
+                <button id="backToProjectsBtn" class="btn btn-ghost">← Projects</button>
+                <h2 id="workspaceProjectName">Project</h2>
+                <span id="workspaceFolderPath" class="folder-badge">Drive</span>
+            </div>
+            <div class="toolbar-right">
+                <button id="scanProjectBtn" class="btn btn-secondary">Scan Project</button>
+                <button id="previewBtn" class="btn btn-secondary">Preview</button>
+                <button id="publishBtn" class="btn btn-secondary">Publish</button>
+                <button id="deleteProjectBtn" class="btn btn-danger">Delete Project</button>
+            </div>
+        </div>
+
+        <div class="workspace-body">
+            <aside class="sidebar explorer-panel">
+                <div class="panel-header">Explorer</div>
+                <div id="fileExplorer" class="file-explorer">
+                    <p class="empty-state">Scan or open project to view files</p>
+                </div>
+            </aside>
+
+            <main class="editor-panel">
+                <div class="panel-header">
+                    <span id="editorFileName">No file open</span>
+                    <button id="saveFileBtn" class="btn btn-small btn-primary" disabled>Save</button>
+                </div>
+                <textarea id="fileEditor" class="file-editor" placeholder="Select a file from the explorer to edit..." disabled></textarea>
+            </main>
+
+            <aside class="right-panel">
+                <div class="panel-section">
+                    <div class="panel-header">AI Chat</div>
+                    <div class="settings-row">
+                        <input type="password" id="geminiApiKey" placeholder="Gemini API Key">
+                        <input type="password" id="openaiApiKey" placeholder="OpenAI API Key (optional)">
+                        <input type="password" id="claudeApiKey" placeholder="Claude API Key (optional)">
+                        <select id="modelSelect">
+                            <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+                            <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
+                        </select>
+                    </div>
+                    <div id="chatHistory" class="chat-history"></div>
+                    <textarea id="promptInput" placeholder="Hello world website banao / Background red kar do / Add navbar..."></textarea>
+                    <button id="sendPromptBtn" class="btn btn-primary btn-full">Send to AI</button>
+                </div>
+
+                <div class="panel-section">
+                    <div class="panel-header">Project Summary</div>
+                    <div id="projectSummary" class="summary-box">Project summary will appear here</div>
+                </div>
+
+                <div class="panel-section">
+                    <div class="panel-header">Activity Log</div>
+                    <div id="activityLog" class="activity-log">No activity yet</div>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <div id="previewModal" class="modal hidden">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>Website Preview</h3>
+                <button id="closePreviewBtn" class="btn btn-ghost">✕</button>
+            </div>
+            <iframe id="previewFrame" class="preview-frame" title="Website Preview"></iframe>
+        </div>
+    </div>
+
+    <div id="projectModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Create New Project</h3>
+            <p class="modal-hint">One project = one Google Drive folder. Duplicates are prevented.</p>
+            <input type="text" id="projectName" placeholder="Project Name">
+            <button id="saveProjectBtn" class="btn btn-primary btn-full">Create & Open</button>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/gemini-api.js"></script>
+    <script src="js/google-drive-auth.js"></script>
+    <script src="js/google-drive-api.js"></script>
+    <script src="js/google-drive-writer.js"></script>
+    <script src="js/code-generator.js"></script>
+    <script src="js/activity-log.js"></script>
+    <script src="js/project-reopen.js"></script>
+    <script src="js/workspace.js"></script>
+    <script src="js/file-manager.js"></script>
+    <script src="js/project-manifest.js"></script>
+    <script src="js/folder-scanner.js"></script>
+    <script src="js/agent.js"></script>
+    <script src="js/ai-engine.js"></script>
+    <script src="js/project-manager.js"></script>
+    <script src="js/publish.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
